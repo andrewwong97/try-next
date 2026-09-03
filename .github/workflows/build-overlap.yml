@@ -17,7 +17,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-          cache-dependency-path: social-scheduler-v0/package-lock.json
       - run: npm install
       - run: npm run build
