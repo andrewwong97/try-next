@@ -19,7 +19,7 @@ export default async function HangoutPage({ params }: { params: Promise<{ id: st
   const failedIds = new Set<string>();
   settled.forEach((result, i) => result.status === "fulfilled" ? busyByParticipant.set(result.value[0], result.value[1]) : failedIds.add(participants[i].id));
   const active = participants.filter((p) => !failedIds.has(p.id));
-  const slots = rankSlots(hangout, active, busyByParticipant);
+  const slots = active.length ? rankSlots(hangout, active, busyByParticipant) : [];
 
   return (
     <main>
@@ -45,7 +45,7 @@ export default async function HangoutPage({ params }: { params: Promise<{ id: st
 
       <section className="card">
         <h2>Best times</h2>
-        {!participants.length && <p>The rankings appear as soon as the first person connects.</p>}
+        {!active.length && <p>The rankings appear as soon as at least one calendar is connected and readable.</p>}
         {!!failedIds.size && <p className="notice">Some calendars need to reconnect before they can be included.</p>}
         <div className="slots">
           {slots.map((slot) => {
