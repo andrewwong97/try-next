@@ -27,10 +27,11 @@ Set these environment variables in the Vercel project:
 - `DATABASE_URL`
 - `GOOGLE_CLIENT_ID`
 - `GOOGLE_CLIENT_SECRET`
-- `APP_URL=https://<your-production-domain>`
 - `APP_ENCRYPTION_KEY`
 
-Then add `https://<your-production-domain>/api/google/callback` to the Google OAuth client's authorized redirect URIs.
+The app derives its production origin from Vercel's built-in `VERCEL_PROJECT_PRODUCTION_URL`, so no custom `APP_URL` is needed.
+
+Add `https://<your-project-production-domain>/api/google/callback` to the Google OAuth client's authorized redirect URIs. Preview deployments use their generated preview URL and therefore require that exact preview callback to be authorized if you want to test OAuth on a preview.
 
 ## v0 limitations
 
