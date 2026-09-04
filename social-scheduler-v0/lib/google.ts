@@ -11,10 +11,16 @@ export const GOOGLE_SCOPES = [
   "https://www.googleapis.com/auth/calendar.freebusy",
 ].join(" ");
 
+function appOrigin() {
+  if (process.env.VERCEL_ENV === "production" && process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  }
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  return "http://localhost:3000";
+}
+
 export function googleRedirectUri() {
-  const appUrl = process.env.APP_URL;
-  if (!appUrl) throw new Error("APP_URL is not configured");
-  return `${appUrl}/api/google/callback`;
+  return `${appOrigin()}/api/google/callback`;
 }
 
 export async function exchangeCode(code: string) {
